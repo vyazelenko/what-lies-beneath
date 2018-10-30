@@ -1,0 +1,345 @@
+# JMH version: 1.21
+# VM version: JDK 11, OpenJDK 64-Bit Server VM, 11+28
+# VM invoker: /home/gezr/dev/jdk-11+28/bin/java
+# VM options: -XX:-Inline
+# Warmup: 1 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: wlb.ComputerBenchmark.compute
+
+# Run progress: 0.00% complete, ETA 00:01:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfAsmProfiler 
+# Profilers consume stdout and stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 12.482 ns/op
+Iteration   1: 12.540 ns/op
+Iteration   2: 11.971 ns/op
+Iteration   3: 11.828 ns/op
+Iteration   4: 11.908 ns/op
+Iteration   5: 12.075 ns/op
+# Processing profiler results: LinuxPerfAsmProfiler 
+
+
+Result "wlb.ComputerBenchmark.compute":
+  12.065 ±(99.9%) 1.081 ns/op [Average]
+  (min, avg, max) = (11.828, 12.065, 12.540), stdev = 0.281
+  CI (99.9%): [10.984, 13.145] (assumes normal distribution)
+
+Secondary result "wlb.ComputerBenchmark.compute:·asm":
+PrintAssembly processed: 121709 total address lines.
+Perf output processed (skipped 12.993 seconds):
+ Column 1: cycles (50194 events)
+
+Hottest code regions (>10.00% "cycles" events):
+
+....[Hottest Region 1]..............................................................................
+c2, level 4, wlb.Computer::compute, version 535 (59 bytes) 
+
+           # parm0:    rdx       = int
+           #           [sp+0x20]  (sp of caller)
+           0x00007f0570483aa0: mov    0x8(%rsi),%r10d
+           0x00007f0570483aa4: movabs $0x800000000,%r12
+           0x00007f0570483aae: add    %r12,%r10
+           0x00007f0570483ab1: xor    %r12,%r12
+           0x00007f0570483ab4: cmp    %r10,%rax
+           0x00007f0570483ab7: jne    0x00007f05689b4c80  ;   {runtime_call ic_miss_stub}
+           0x00007f0570483abd: data16 xchg %ax,%ax
+         [Verified Entry Point]
+  2.53%    0x00007f0570483ac0: mov    %eax,-0x14000(%rsp)
+  1.38%    0x00007f0570483ac7: push   %rbp
+  1.51%    0x00007f0570483ac8: sub    $0x10,%rsp         ;*synchronization entry
+                                                         ; - wlb.Computer::compute@-1 (line 9)
+  2.26%    0x00007f0570483acc: mov    %edx,%r11d
+  0.08%    0x00007f0570483acf: sar    $0x1f,%edx
+  1.70%    0x00007f0570483ad2: movslq %r11d,%r10
+  0.88%    0x00007f0570483ad5: imul   $0x7aeca299,%r10,%r10
+  1.33%    0x00007f0570483adc: sar    $0x3c,%r10
+  0.08%    0x00007f0570483ae0: mov    %r10d,%r10d
+  1.65%    0x00007f0570483ae3: sub    %r10d,%edx         ;*idiv {reexecute=0 rethrow=0 return_oop=0}
+                                                         ; - wlb.Computer::compute@4 (line 9)
+  0.85%    0x00007f0570483ae6: nop
+  1.33%    0x00007f0570483ae7: callq  0x00007f0568fb40e0  ; ImmutableOopMap{}
+                                                         ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=0}
+                                                         ; - wlb.Computer::compute@5 (line 9)
+                                                         ;   {optimized virtual_call}
+  6.88%    0x00007f0570483aec: add    $0x10,%rsp
+  1.41%    0x00007f0570483af0: pop    %rbp
+  0.03%    0x00007f0570483af1: mov    0x108(%r15),%r10
+  2.48%    0x00007f0570483af8: test   %eax,(%r10)        ;   {poll_return}
+  0.56%    0x00007f0570483afb: retq                      ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=0}
+                                                         ; - wlb.Computer::compute@5 (line 9)
+           0x00007f0570483afc: mov    %rax,%rsi
+           0x00007f0570483aff: add    $0x10,%rsp
+           0x00007f0570483b03: pop    %rbp
+           0x00007f0570483b04: jmpq   0x00007f0568a80600  ;   {runtime_call _rethrow_Java}
+           0x00007f0570483b09: hlt    
+           0x00007f0570483b0a: hlt    
+           0x00007f0570483b0b: hlt    
+           0x00007f0570483b0c: hlt    
+           0x00007f0570483b0d: hlt    
+....................................................................................................
+ 26.94%  <total for region 1>
+
+....[Hottest Region 2]..............................................................................
+c2, level 4, wlb.ComputerBenchmark::compute, version 534 (51 bytes) 
+
+            # {method} {0x00007f0550dac7d0} &apos;compute&apos; &apos;()I&apos; in &apos;wlb/ComputerBenchmark&apos;
+            #           [sp+0x20]  (sp of caller)
+            0x00007f0570483740: mov    0x8(%rsi),%r10d
+            0x00007f0570483744: movabs $0x800000000,%r12
+            0x00007f057048374e: add    %r12,%r10
+            0x00007f0570483751: xor    %r12,%r12
+            0x00007f0570483754: cmp    %r10,%rax
+            0x00007f0570483757: jne    0x00007f05689b4c80  ;   {runtime_call ic_miss_stub}
+            0x00007f057048375d: data16 xchg %ax,%ax
+          [Verified Entry Point]
+  2.47%     0x00007f0570483760: mov    %eax,-0x14000(%rsp)
+  1.37%     0x00007f0570483767: push   %rbp
+  1.65%     0x00007f0570483768: sub    $0x10,%rsp         ;*synchronization entry
+                                                          ; - wlb.ComputerBenchmark::compute@-1 (line 24)
+  2.23%     0x00007f057048376c: mov    0xc(%rsi),%r11d    ;*getfield computer {reexecute=0 rethrow=0 return_oop=0}
+                                                          ; - wlb.ComputerBenchmark::compute@1 (line 24)
+  0.10%     0x00007f0570483770: test   %r11d,%r11d
+  0.00%  ╭  0x00007f0570483773: je     0x00007f0570483794  ;*invokevirtual compute {reexecute=0 rethrow=0 return_oop=0}
+         │                                                ; - wlb.ComputerBenchmark::compute@6 (line 24)
+  1.68%  │  0x00007f0570483775: lea    (%r12,%r11,8),%rsi  ;*getfield computer {reexecute=0 rethrow=0 return_oop=0}
+         │                                                ; - wlb.ComputerBenchmark::compute@1 (line 24)
+  0.90%  │  0x00007f0570483779: mov    $0xcafebabe,%edx
+  1.38%  │  0x00007f057048377e: nop
+  0.11%  │  0x00007f057048377f: callq  0x00007f0568fb3c60  ; ImmutableOopMap{}
+         │                                                ;*invokevirtual compute {reexecute=0 rethrow=0 return_oop=0}
+         │                                                ; - wlb.ComputerBenchmark::compute@6 (line 24)
+         │                                                ;   {optimized virtual_call}
+  1.38%  │  0x00007f0570483784: add    $0x10,%rsp
+  2.18%  │  0x00007f0570483788: pop    %rbp
+  0.54%  │  0x00007f0570483789: mov    0x108(%r15),%r10
+  1.10%  │  0x00007f0570483790: test   %eax,(%r10)        ;   {poll_return}
+  0.03%  │  0x00007f0570483793: retq   
+         ↘  0x00007f0570483794: mov    $0xfffffff6,%esi
+            0x00007f0570483799: xchg   %ax,%ax
+            0x00007f057048379b: callq  0x00007f05689b6900  ; ImmutableOopMap{}
+                                                          ;*invokevirtual compute {reexecute=0 rethrow=0 return_oop=0}
+                                                          ; - wlb.ComputerBenchmark::compute@6 (line 24)
+                                                          ;   {runtime_call UncommonTrapBlob}
+            0x00007f05704837a0: ud2                       ;*invokevirtual compute {reexecute=0 rethrow=0 return_oop=0}
+                                                          ; - wlb.ComputerBenchmark::compute@6 (line 24)
+            0x00007f05704837a2: mov    %rax,%rsi
+            0x00007f05704837a5: add    $0x10,%rsp
+....................................................................................................
+ 17.12%  <total for region 2>
+
+....[Hottest Region 3]..............................................................................
+c2, level 4, org.openjdk.jmh.infra.Blackhole::consume, version 537 (55 bytes) 
+
+            # parm0:    rdx       = int
+            #           [sp+0x30]  (sp of caller)
+            0x00007f0570484120: mov    0x8(%rsi),%r10d
+            0x00007f0570484124: movabs $0x800000000,%r12
+            0x00007f057048412e: add    %r12,%r10
+            0x00007f0570484131: xor    %r12,%r12
+            0x00007f0570484134: cmp    %r10,%rax
+            0x00007f0570484137: jne    0x00007f05689b4c80  ;   {runtime_call ic_miss_stub}
+            0x00007f057048413d: data16 xchg %ax,%ax
+          [Verified Entry Point]
+  1.60%     0x00007f0570484140: mov    %eax,-0x14000(%rsp)
+  2.38%     0x00007f0570484147: push   %rbp
+  0.73%     0x00007f0570484148: sub    $0x20,%rsp         ;*synchronization entry
+                                                          ; - org.openjdk.jmh.infra.Blackhole::consume@-1 (line 378)
+  1.12%     0x00007f057048414c: mov    0xb0(%rsi),%r10d   ;*getfield i1 {reexecute=0 rethrow=0 return_oop=0}
+                                                          ; - org.openjdk.jmh.infra.Blackhole::consume@1 (line 378)
+  2.20%     0x00007f0570484153: mov    %edx,%r8d
+  0.76%     0x00007f0570484156: xor    0xb8(%rsi),%r8d    ;*ixor {reexecute=0 rethrow=0 return_oop=0}
+                                                          ; - org.openjdk.jmh.infra.Blackhole::consume@15 (line 380)
+  1.01%     0x00007f057048415d: mov    %edx,%r9d
+  0.09%     0x00007f0570484160: xor    %r10d,%r9d         ;*ixor {reexecute=0 rethrow=0 return_oop=0}
+                                                          ; - org.openjdk.jmh.infra.Blackhole::consume@12 (line 380)
+  2.24%     0x00007f0570484163: cmp    %r8d,%r9d
+         ╭  0x00007f0570484166: je     0x00007f0570484178  ;*if_icmpne {reexecute=0 rethrow=0 return_oop=0}
+         │                                                ; - org.openjdk.jmh.infra.Blackhole::consume@16 (line 380)
+  0.77%  │  0x00007f0570484168: add    $0x20,%rsp
+  0.97%  │  0x00007f057048416c: pop    %rbp
+  0.09%  │  0x00007f057048416d: mov    0x108(%r15),%r10
+  2.15%  │  0x00007f0570484174: test   %eax,(%r10)        ;   {poll_return}
+  0.80%  │  0x00007f0570484177: retq   
+         ↘  0x00007f0570484178: mov    %rsi,%rbp
+            0x00007f057048417b: mov    %edx,(%rsp)
+            0x00007f057048417e: mov    %r9d,0x4(%rsp)
+            0x00007f0570484183: mov    %r8d,0x8(%rsp)
+            0x00007f0570484188: mov    $0xffffff4d,%esi
+            0x00007f057048418d: xchg   %ax,%ax
+            0x00007f057048418f: callq  0x00007f05689b6900  ; ImmutableOopMap{rbp=Oop }
+                                                          ;*if_icmpne {reexecute=1 rethrow=0 return_oop=0}
+                                                          ; - org.openjdk.jmh.infra.Blackhole::consume@16 (line 380)
+                                                          ;   {runtime_call UncommonTrapBlob}
+....................................................................................................
+ 16.90%  <total for region 3>
+
+....[Hottest Region 4]..............................................................................
+c2, level 4, wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub, version 566 (51 bytes) 
+
+             0x00007f0570487840: mov    0x38(%rsp),%r10
+             0x00007f0570487845: movzbl 0x94(%r10),%r11d   ;*getfield isDone {reexecute=0 rethrow=0 return_oop=0}
+                                                           ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@30 (line 192)
+                                                           ; implicit exception: dispatches to 0x00007f0570487912
+             0x00007f057048784d: mov    $0x1,%ebp
+             0x00007f0570487852: test   %r11d,%r11d
+         ╭   0x00007f0570487855: jne    0x00007f0570487898  ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+         │                                                 ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@33 (line 192)
+         │   0x00007f0570487857: nopw   0x0(%rax,%rax,1)   ;*aload_1 {reexecute=0 rethrow=0 return_oop=0}
+         │                                                 ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@36 (line 193)
+  0.46%  │↗  0x00007f0570487860: mov    0x40(%rsp),%rsi
+  1.04%  ││  0x00007f0570487865: xchg   %ax,%ax
+         ││  0x00007f0570487867: callq  0x00007f05689b4f00  ; ImmutableOopMap{[48]=Oop [56]=Oop [64]=Oop [0]=Oop }
+         ││                                                ;*invokevirtual compute {reexecute=0 rethrow=0 return_oop=0}
+         ││                                                ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@17 (line 190)
+         ││                                                ;   {optimized virtual_call}
+  3.30%  ││  0x00007f057048786c: mov    (%rsp),%rsi
+  1.02%  ││  0x00007f0570487870: mov    %eax,%edx
+  0.01%  ││  0x00007f0570487872: nop
+  2.11%  ││  0x00007f0570487873: callq  0x00007f05689b4f00  ; ImmutableOopMap{[48]=Oop [56]=Oop [64]=Oop [0]=Oop }
+         ││                                                ;*invokevirtual consume {reexecute=0 rethrow=0 return_oop=0}
+         ││                                                ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@20 (line 190)
+         ││                                                ;   {optimized virtual_call}
+  2.88%  ││  0x00007f0570487878: mov    0x38(%rsp),%r10
+  1.76%  ││  0x00007f057048787d: movzbl 0x94(%r10),%r11d   ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+         ││                                                ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@33 (line 192)
+  0.99%  ││  0x00007f0570487885: mov    0x108(%r15),%r10
+  1.14%  ││  0x00007f057048788c: add    $0x1,%rbp          ; ImmutableOopMap{[48]=Oop [56]=Oop [64]=Oop [0]=Oop }
+         ││                                                ;*ifeq {reexecute=1 rethrow=0 return_oop=0}
+         ││                                                ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@33 (line 192)
+         ││  0x00007f0570487890: test   %eax,(%r10)        ;   {poll}
+  1.61%  ││  0x00007f0570487893: test   %r11d,%r11d
+         │╰  0x00007f0570487896: je     0x00007f0570487860  ;*aload_1 {reexecute=0 rethrow=0 return_oop=0}
+         │                                                 ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@36 (line 193)
+         ↘   0x00007f0570487898: movabs $0x7f058718e930,%r10
+             0x00007f05704878a2: callq  *%r10              ;*invokestatic nanoTime {reexecute=0 rethrow=0 return_oop=0}
+                                                           ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@37 (line 193)
+             0x00007f05704878a5: mov    0x30(%rsp),%r10
+             0x00007f05704878aa: mov    %rbp,0x18(%r10)    ;*putfield measuredOps {reexecute=0 rethrow=0 return_oop=0}
+                                                           ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@52 (line 195)
+             0x00007f05704878ae: mov    %rax,0x30(%r10)    ;*putfield stopTime {reexecute=0 rethrow=0 return_oop=0}
+                                                           ; - wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub@40 (line 193)
+....................................................................................................
+ 16.32%  <total for region 4>
+
+....[Hottest Region 5]..............................................................................
+c1, level 1, wlb.Computer::add, version 536 (36 bytes) 
+
+           # parm0:    rdx       = int
+           #           [sp+0x40]  (sp of caller)
+           0x00007f0570483dc0: mov    0x8(%rsi),%r10d
+           0x00007f0570483dc4: movabs $0x800000000,%r12
+           0x00007f0570483dce: add    %r12,%r10
+           0x00007f0570483dd1: xor    %r12,%r12
+           0x00007f0570483dd4: cmp    %rax,%r10
+           0x00007f0570483dd7: jne    0x00007f05689b4c80  ;   {runtime_call ic_miss_stub}
+           0x00007f0570483ddd: data16 xchg %ax,%ax
+         [Verified Entry Point]
+  1.74%    0x00007f0570483de0: mov    %eax,-0x14000(%rsp)
+  2.30%    0x00007f0570483de7: push   %rbp
+  0.08%    0x00007f0570483de8: sub    $0x30,%rsp         ;*iload_1 {reexecute=0 rethrow=0 return_oop=0}
+                                                         ; - wlb.Computer::add@0 (line 5)
+  2.53%    0x00007f0570483dec: add    $0xfe,%edx
+  1.40%    0x00007f0570483df2: mov    %rdx,%rax
+  0.09%    0x00007f0570483df5: add    $0x30,%rsp
+  1.68%    0x00007f0570483df9: pop    %rbp
+  1.25%    0x00007f0570483dfa: mov    0x108(%r15),%r10
+  1.37%    0x00007f0570483e01: test   %eax,(%r10)        ;   {poll_return}
+  0.11%    0x00007f0570483e04: retq   
+           0x00007f0570483e05: nop
+           0x00007f0570483e06: nop
+           0x00007f0570483e07: mov    0x420(%r15),%rax
+           0x00007f0570483e0e: movabs $0x0,%r10
+           0x00007f0570483e18: mov    %r10,0x420(%r15)
+           0x00007f0570483e1f: movabs $0x0,%r10
+           0x00007f0570483e29: mov    %r10,0x428(%r15)
+           0x00007f0570483e30: add    $0x30,%rsp
+           0x00007f0570483e34: pop    %rbp
+           0x00007f0570483e35: jmpq   0x00007f0568a7ba00  ;   {runtime_call unwind_exception Runtime1 stub}
+....................................................................................................
+ 12.56%  <total for region 5>
+
+....[Hottest Regions]...............................................................................
+ 26.94%         c2, level 4  wlb.Computer::compute, version 535 (59 bytes) 
+ 17.12%         c2, level 4  wlb.ComputerBenchmark::compute, version 534 (51 bytes) 
+ 16.90%         c2, level 4  org.openjdk.jmh.infra.Blackhole::consume, version 537 (55 bytes) 
+ 16.32%         c2, level 4  wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub, version 566 (51 bytes) 
+ 12.56%         c1, level 1  wlb.Computer::add, version 536 (36 bytes) 
+  4.54%         c2, level 4  wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub, version 565 (86 bytes) 
+  0.80%   [kernel.kallsyms]  native_write_msr (5 bytes) 
+  0.20%   [kernel.kallsyms]  __update_load_avg_se (147 bytes) 
+  0.17%   [kernel.kallsyms]  apic_timer_interrupt (0 bytes) 
+  0.15%   [kernel.kallsyms]  __update_load_avg_cfs_rq (67 bytes) 
+  0.14%   [kernel.kallsyms]  _raw_spin_lock_irqsave (41 bytes) 
+  0.14%   [kernel.kallsyms]  _raw_spin_trylock (44 bytes) 
+  0.13%   [kernel.kallsyms]  read_tsc (12 bytes) 
+  0.13%   [kernel.kallsyms]  cpuacct_charge (179 bytes) 
+  0.13%   [kernel.kallsyms]  interrupt_entry (116 bytes) 
+  0.12%   [kernel.kallsyms]  update_curr (131 bytes) 
+  0.11%   [kernel.kallsyms]  cgroup_rstat_updated (64 bytes) 
+  0.11%           kvm.ko.xz  pvclock_gtod_notify (57 bytes) 
+  0.11%   [kernel.kallsyms]  __calc_delta (105 bytes) 
+  0.10%   [kernel.kallsyms]  native_sched_clock (105 bytes) 
+  3.05%  <...other 365 warm regions...>
+....................................................................................................
+100.00%  <totals>
+
+....[Hottest Methods (after inlining)]..............................................................
+ 26.94%         c2, level 4  wlb.Computer::compute, version 535 
+ 17.12%         c2, level 4  wlb.ComputerBenchmark::compute, version 534 
+ 16.90%         c2, level 4  org.openjdk.jmh.infra.Blackhole::consume, version 537 
+ 16.32%         c2, level 4  wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub, version 566 
+ 12.56%         c1, level 1  wlb.Computer::add, version 536 
+  4.54%         c2, level 4  wlb.generated.ComputerBenchmark_compute_jmhTest::compute_avgt_jmhStub, version 565 
+  0.80%   [kernel.kallsyms]  native_write_msr 
+  0.26%   [kernel.kallsyms]  __update_load_avg_se 
+  0.26%   [kernel.kallsyms]  timekeeping_advance 
+  0.21%   [kernel.kallsyms]  __update_load_avg_cfs_rq 
+  0.17%   [kernel.kallsyms]  apic_timer_interrupt 
+  0.16%   [kernel.kallsyms]  update_cfs_group 
+  0.14%   [kernel.kallsyms]  _raw_spin_lock_irqsave 
+  0.14%   [kernel.kallsyms]  _raw_spin_trylock 
+  0.13%   [kernel.kallsyms]  update_irq_load_avg 
+  0.13%   [kernel.kallsyms]  update_curr 
+  0.13%   [kernel.kallsyms]  task_tick_fair 
+  0.13%   [kernel.kallsyms]  read_tsc 
+  0.13%   [kernel.kallsyms]  cpuacct_charge 
+  0.13%   [kernel.kallsyms]  interrupt_entry 
+  2.69%  <...other 237 warm methods...>
+....................................................................................................
+100.00%  <totals>
+
+....[Distribution by Source]........................................................................
+ 81.83%         c2, level 4
+ 12.56%         c1, level 1
+  5.28%   [kernel.kallsyms]
+  0.12%           kvm.ko.xz
+  0.11%           libjvm.so
+  0.04%        libc-2.27.so
+  0.02%  libpthread-2.27.so
+  0.01%         interpreter
+  0.01%          ld-2.27.so
+  0.00%          i915.ko.xz
+  0.00%      hsdis-amd64.so
+  0.00%           drm.ko.xz
+  0.00%              [vdso]
+  0.00%      libz.so.1.2.11
+  0.00%        idma64.ko.xz
+....................................................................................................
+100.00%  <totals>
+
+
+
+# Run complete. Total time: 00:01:05
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                       Mode  Cnt   Score   Error  Units
+ComputerBenchmark.compute       avgt    5  12.065 ± 1.081  ns/op
+ComputerBenchmark.compute:·asm  avgt          NaN            ---

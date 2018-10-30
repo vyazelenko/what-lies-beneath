@@ -1,0 +1,8 @@
+-- Getting Interpreter assembly output
+java -XX:+UnlockDiagnosticVMOptions -XX:+PrintInterpreter -version > asm_int.txt
+
+-- Disable inlining
+-XX:-Inline
+
+-- Getting Assembly from JMH
+-prof perfasm

@@ -1,0 +1,67 @@
+# JMH version: 1.21
+# VM version: JDK 11, OpenJDK 64-Bit Server VM, 11+28
+# VM invoker: /home/gezr/dev/jdk-11+28/bin/java
+# VM options: <none>
+# Warmup: 5 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: wlb.ComputerBenchmark.compute
+
+# Run progress: 0.00% complete, ETA 00:05:00
+# Fork: 1 of 3
+# Warmup Iteration   1: 7.048 ns/op
+# Warmup Iteration   2: 7.045 ns/op
+# Warmup Iteration   3: 6.302 ns/op
+# Warmup Iteration   4: 6.310 ns/op
+# Warmup Iteration   5: 6.346 ns/op
+Iteration   1: 6.311 ns/op
+Iteration   2: 6.311 ns/op
+Iteration   3: 6.320 ns/op
+Iteration   4: 6.318 ns/op
+Iteration   5: 6.310 ns/op
+
+# Run progress: 33.33% complete, ETA 00:03:20
+# Fork: 2 of 3
+# Warmup Iteration   1: 7.049 ns/op
+# Warmup Iteration   2: 7.049 ns/op
+# Warmup Iteration   3: 6.301 ns/op
+# Warmup Iteration   4: 6.304 ns/op
+# Warmup Iteration   5: 6.303 ns/op
+Iteration   1: 6.302 ns/op
+Iteration   2: 6.304 ns/op
+Iteration   3: 6.303 ns/op
+Iteration   4: 6.302 ns/op
+Iteration   5: 6.301 ns/op
+
+# Run progress: 66.67% complete, ETA 00:01:40
+# Fork: 3 of 3
+# Warmup Iteration   1: 7.044 ns/op
+# Warmup Iteration   2: 7.047 ns/op
+# Warmup Iteration   3: 6.306 ns/op
+# Warmup Iteration   4: 6.304 ns/op
+# Warmup Iteration   5: 6.305 ns/op
+Iteration   1: 6.305 ns/op
+Iteration   2: 6.305 ns/op
+Iteration   3: 6.305 ns/op
+Iteration   4: 6.305 ns/op
+Iteration   5: 6.307 ns/op
+
+
+Result "wlb.ComputerBenchmark.compute":
+  6.307 ±(99.9%) 0.006 ns/op [Average]
+  (min, avg, max) = (6.301, 6.307, 6.320), stdev = 0.006
+  CI (99.9%): [6.301, 6.313] (assumes normal distribution)
+
+
+# Run complete. Total time: 00:05:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                  Mode  Cnt  Score   Error  Units
+ComputerBenchmark.compute  avgt   15  6.307 ± 0.006  ns/op
