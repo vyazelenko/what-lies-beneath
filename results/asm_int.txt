@@ -10407,20 +10407,29 @@ idiv  108 idiv  [0x00007f8f8f72ecc0, 0x00007f8f8f72ed00]  64 bytes
 
   0x00007f8f8f72ecc0: mov    (%rsp),%eax
   0x00007f8f8f72ecc3: add    $0x8,%rsp
-  0x00007f8f8f72ecc7: mov    %eax,%ecx
-  0x00007f8f8f72ecc9: mov    (%rsp),%eax
+  0x00007f8f8f72ecc7: mov    %eax,%ecx         // %ecx contains divisor
+  0x00007f8f8f72ecc9: mov    (%rsp),%eax       // %eax contains divident
   0x00007f8f8f72eccc: add    $0x8,%rsp
-  0x00007f8f8f72ecd0: cmp    $0x80000000,%eax
+  0x00007f8f8f72ecd0: cmp    $0x80000000,%eax  // divident == Integer.MIN_VALUE
   0x00007f8f8f72ecd6: jne    0x00007f8f8f72ece7
-  0x00007f8f8f72ecdc: xor    %edx,%edx
-  0x00007f8f8f72ecde: cmp    $0xffffffff,%ecx
+  0x00007f8f8f72ecdc: xor    %edx,%edx         // %edx=0
+  0x00007f8f8f72ecde: cmp    $0xffffffff,%ecx  // divisor == -1
   0x00007f8f8f72ece1: je     0x00007f8f8f72ecea
-  0x00007f8f8f72ece7: cltd   
-  0x00007f8f8f72ece8: idiv   %ecx
-  0x00007f8f8f72ecea: movzbl 0x1(%r13),%ebx
-  0x00007f8f8f72ecef: inc    %r13
-  0x00007f8f8f72ecf2: movabs $0x7f8fadbe4d80,%r10
-  0x00007f8f8f72ecfc: jmpq   *(%r10,%rbx,8)
+
+  0x00007f8f8f72ece7: cltd                     // 64 bit: cltd converts the signed long in EAX to a signed double long in EDX:EAX
+                                               // by extending the most-significant bit (sign bit) of EAX into all bits of EDX.
+
+  0x00007f8f8f72ece8: idiv   %ecx              // idiv executes signed division. idiv divides a 16-, 32-, or 64-bit
+                                               // register value (dividend) by a register or memory byte, word, or long (divisor).
+                                               // The size of the divisor (8-, 16- or 32-bit operand) determines the particular
+                                               // register used as the dividend, quotient, and remainder.
+                                               // %eax -> contains Quotient
+                                               // %edx -> contains Remainder
+
+  0x00007f8f8f72ecea: movzbl 0x1(%r13),%ebx       // ???
+  0x00007f8f8f72ecef: inc    %r13                 //
+  0x00007f8f8f72ecf2: movabs $0x7f8fadbe4d80,%r10 //
+  0x00007f8f8f72ecfc: jmpq   *(%r10,%rbx,8)       //
 
 ----------------------------------------------------------------------
 ldiv  109 ldiv  [0x00007f8f8f72ed20, 0x00007f8f8f72ed80]  96 bytes
