@@ -11,5 +11,13 @@ This will produce a single jar file containing benchmarks, i.e. `build/libs/benc
 ## Run
 First build the benchmark jars as described above and then execute them using the following command:
 ```
-java -jar build/libs/benchmarks.jar
+java -jar build/libs/benchmarks.jar <benchmark params>
+```
+For example this is how to run benchmarks with inlining disabled:
+```
+java -jar build/libs/benchmarks.jar -jvmArgs '-XX:-Inline'
+```
+And this is an example ofn running in the interpreter:
+```
+java -jar build/libs/benchmarks.jar -jvmArgs '-Xint'
 ```
