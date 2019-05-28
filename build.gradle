@@ -1,7 +1,7 @@
 plugins {
-    id "java"
-    id "com.github.ben-manes.versions" version "0.21.0"
-    id "com.github.johnrengelman.shadow" version "5.0.0"
+    id 'java'
+    id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
 }
 
 sourceCompatibility = 11
@@ -12,13 +12,14 @@ repositories {
 }
 
 dependencies {
-    compile "org.openjdk.jol:jol-core:0.9"
-    compile "org.openjdk.jmh:jmh-core:1.21"
-    annotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:1.21"
+    compile 'org.openjdk.jol:jol-core:0.9'
+    compile 'org.openjdk.jmh:jmh-core:1.21'
+    annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.21'
 }
 
 shadowJar {
-    classifier = 'benchmarks'
+    archiveClassifier = ''
+    archiveBaseName = 'benchmarks'
     manifest {
         attributes 'Main-Class': 'org.openjdk.jmh.Main'
     }
