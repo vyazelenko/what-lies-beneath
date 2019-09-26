@@ -1,11 +1,11 @@
 plugins {
     id 'java'
-    id 'com.github.ben-manes.versions' version '0.21.0'
-    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'com.github.ben-manes.versions' version '0.25.0'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 8
+targetCompatibility = 8
 
 repositories {
     jcenter()
