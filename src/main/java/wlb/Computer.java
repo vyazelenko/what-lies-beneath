@@ -6,7 +6,8 @@ public class Computer {
     }
 
     public int compute(int value) {
-        return add(value / 0xdeadbeef);
+        int divisor = 0xdeadbeef;
+        return add(value / divisor);
     }
 
     public static void main(String[] args) {
