@@ -4,8 +4,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-sourceCompatibility = 8
-targetCompatibility = 8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     jcenter()
