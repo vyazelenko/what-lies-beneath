@@ -3,10 +3,7 @@ package wlb;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.shuffle;
@@ -20,8 +17,8 @@ public class CacheFriendlinessBenchmark {
     @Param({"1000", "10000", "100000", "1000000"})
     private int size;
     private ArrayList<Integer> values;
-    private List<Integer> linkedList;
-    private List<Integer> arrayList;
+    private LinkedList<Integer> linkedList;
+    private ArrayList<Integer> arrayList;
     private int[] array;
     private Iterator<Integer> iterator;
     private int index;
@@ -35,7 +32,7 @@ public class CacheFriendlinessBenchmark {
         }
         arrayList = new ArrayList<>(values);
         shuffle(arrayList, r);
-        linkedList = new ArrayList<>(values);
+        linkedList = new LinkedList<>(values);
         shuffle(linkedList, r);
         array = new int[size];
         for (int i = 0; i < size; i++) {
