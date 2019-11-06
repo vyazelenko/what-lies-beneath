@@ -19,10 +19,10 @@ import static java.util.Collections.shuffle;
 public class CacheFriendlinessBenchmark {
     @Param({"1000", "10000", "100000", "1000000"})
     private int size;
+    private ArrayList<Integer> values;
     private List<Integer> linkedList;
     private List<Integer> arrayList;
     private int[] array;
-    private ArrayList<Integer> values;
     private Iterator<Integer> iterator;
     private int index;
 
@@ -30,7 +30,6 @@ public class CacheFriendlinessBenchmark {
     public void setup() {
         Random r = new Random(-18379);
         values = new ArrayList<>(size);
-        array = new int[size];
         for (int i = 0; i < size; i++) {
             values.add(r.nextInt());
         }
@@ -38,6 +37,7 @@ public class CacheFriendlinessBenchmark {
         shuffle(arrayList, r);
         linkedList = new ArrayList<>(values);
         shuffle(linkedList, r);
+        array = new int[size];
         for (int i = 0; i < size; i++) {
             array[i] = values.get(r.nextInt(size));
         }
@@ -59,7 +59,7 @@ public class CacheFriendlinessBenchmark {
             iterator = arrayList.iterator();
         }
         for (int i = 0; i < 1024 && iterator.hasNext(); i++) {
-            bh.consume(iterator.next());
+            bh.consume(iterator.next().intValue());
         }
     }
 
