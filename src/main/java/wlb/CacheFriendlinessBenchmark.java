@@ -3,10 +3,11 @@ package wlb;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
-import static java.util.Collections.shuffle;
 
 @Fork(3)
 @BenchmarkMode(Mode.AverageTime)
@@ -24,19 +25,24 @@ public class CacheFriendlinessBenchmark {
     private int index;
 
     @Setup
-    public void setup() {
+    public void setup(Blackhole bh) {
         Random r = new Random(-18379);
         values = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             values.add(r.nextInt());
         }
-        arrayList = new ArrayList<>(values);
-        shuffle(arrayList, r);
-        linkedList = new LinkedList<>(values);
-        shuffle(linkedList, r);
+        arrayList = new ArrayList<>(size);
+        linkedList = new LinkedList<>();
         array = new int[size];
         for (int i = 0; i < size; i++) {
-            array[i] = values.get(r.nextInt(size));
+            Integer value = values.get(r.nextInt(size));
+            linkedList.add(value);
+            arrayList.add(value);
+            array[i] = value;
+            // Allocate some garbage to push the next Node to the another cache line
+            for (int j = 0; j < 10; j++) {
+                bh.consume(Long.valueOf(r.nextLong()));
+            }
         }
     }
 
