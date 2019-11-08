@@ -30,6 +30,10 @@ public class CacheFriendlinessBenchmark {
         values = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             values.add(r.nextInt());
+            // Push Integer objects to separate cache lines
+            for (int j = 0; j < 10; j++) {
+                bh.consume(Long.valueOf(r.nextLong()));
+            }
         }
         arrayList = new ArrayList<>(size);
         linkedList = new LinkedList<>();
