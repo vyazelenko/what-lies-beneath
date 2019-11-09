@@ -12,11 +12,13 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Math.max;
 
 @Fork(3)
+@Warmup(iterations = 5, time = 1)
+@Measurement(iterations = 5, time = 5)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Benchmark)
 public class CacheFriendlinessBenchmark {
-    @Param({"1000", "10000", "100000", "1000000"})
+    @Param({"1024", "16384", "131072", "1048576"})
     private int size;
     private ArrayList<Integer> values;
     private LinkedList<Integer> linkedList;
@@ -54,33 +56,38 @@ public class CacheFriendlinessBenchmark {
     @Benchmark
     @OperationsPerInvocation(1024)
     public void linkedList(Blackhole bh) {
-        if (iterator == null || !iterator.hasNext()) {
-            iterator = linkedList.iterator();
+        Iterator<Integer> it = iterator;
+        if (it == null || !it.hasNext()) {
+            iterator = it = linkedList.iterator();
         }
-        for (int i = 0; i < 1024 && iterator.hasNext(); i++) {
-            bh.consume(iterator.next().intValue());
+        for (int i = 0; i < 1024 && it.hasNext(); i++) {
+            bh.consume(it.next().intValue());
         }
     }
 
     @Benchmark
     @OperationsPerInvocation(1024)
     public void arrayList(Blackhole bh) {
-        if (iterator == null || !iterator.hasNext()) {
-            iterator = arrayList.iterator();
+        Iterator<Integer> it = iterator;
+        if (it == null || !it.hasNext()) {
+            iterator = it = arrayList.iterator();
         }
-        for (int i = 0; i < 1024 && iterator.hasNext(); i++) {
-            bh.consume(iterator.next().intValue());
+        for (int i = 0; i < 1024 && it.hasNext(); i++) {
+            bh.consume(it.next().intValue());
         }
     }
 
     @Benchmark
     @OperationsPerInvocation(1024)
     public void array(Blackhole bh) {
+        int[] array = this.array;
+        int index = this.index;
         if (index == array.length) {
             index = 0;
         }
         for (int i = 0; i < 1024 && index < array.length; i++) {
             bh.consume(array[index++]);
         }
+        this.index = index;
     }
 }
