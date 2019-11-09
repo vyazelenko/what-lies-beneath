@@ -9,11 +9,12 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Math.max;
+
 @Fork(3)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Benchmark)
-@OperationsPerInvocation(1024)
 public class CacheFriendlinessBenchmark {
     @Param({"1000", "10000", "100000", "1000000"})
     private int size;
@@ -31,7 +32,7 @@ public class CacheFriendlinessBenchmark {
         for (int i = 0; i < size; i++) {
             values.add(r.nextInt());
             // Push Integer objects to separate cache lines
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0, end = max(7, 7 + r.nextInt(12)); j < end; j++) {
                 bh.consume(Long.valueOf(r.nextLong()));
             }
         }
@@ -44,13 +45,14 @@ public class CacheFriendlinessBenchmark {
             arrayList.add(value);
             array[i] = value;
             // Allocate some garbage to push the next Node to the another cache line
-            for (int j = 0; j < 10; j++) {
-                bh.consume(Long.valueOf(r.nextLong()));
+            for (int j = 0, end = max(9, 9 + r.nextInt(16)); j < end; j++) {
+                bh.consume(Float.valueOf(r.nextFloat()));
             }
         }
     }
 
     @Benchmark
+    @OperationsPerInvocation(1024)
     public void linkedList(Blackhole bh) {
         if (iterator == null || !iterator.hasNext()) {
             iterator = linkedList.iterator();
@@ -61,6 +63,7 @@ public class CacheFriendlinessBenchmark {
     }
 
     @Benchmark
+    @OperationsPerInvocation(1024)
     public void arrayList(Blackhole bh) {
         if (iterator == null || !iterator.hasNext()) {
             iterator = arrayList.iterator();
@@ -71,6 +74,7 @@ public class CacheFriendlinessBenchmark {
     }
 
     @Benchmark
+    @OperationsPerInvocation(1024)
     public void array(Blackhole bh) {
         if (index == array.length) {
             index = 0;
