@@ -56,39 +56,44 @@ public class CacheFriendlinessBenchmark {
 
     @Benchmark
     @OperationsPerInvocation(1024)
-    public void linkedList(Blackhole bh) {
+    public void linkedList() {
         Iterator<Integer> it = iterator;
         if (it == null || !it.hasNext()) {
             iterator = it = linkedList.iterator();
         }
         for (int i = 0; i < 1024 && it.hasNext(); i++) {
-            bh.consume(it.next().intValue());
+            sink(it.next());
         }
     }
 
     @Benchmark
     @OperationsPerInvocation(1024)
-    public void arrayList(Blackhole bh) {
+    public void arrayList() {
         Iterator<Integer> it = iterator;
         if (it == null || !it.hasNext()) {
             iterator = it = arrayList.iterator();
         }
         for (int i = 0; i < 1024 && it.hasNext(); i++) {
-            bh.consume(it.next().intValue());
+            sink(it.next());
         }
     }
 
     @Benchmark
     @OperationsPerInvocation(1024)
-    public void array(Blackhole bh) {
+    public void array() {
         int[] array = this.array;
         int index = this.index;
         if (index == array.length) {
             index = 0;
         }
         for (int i = 0; i < 1024 && index < array.length; i++) {
-            bh.consume(array[index++]);
+            sink(array[index++]);
         }
         this.index = index;
+    }
+
+    @CompilerControl(CompilerControl.Mode.DONT_INLINE)
+    private void sink(int value) {
+        // Manual sink to avoid Blackhole overhead
     }
 }
