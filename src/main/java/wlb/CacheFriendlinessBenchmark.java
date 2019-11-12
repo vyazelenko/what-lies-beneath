@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Math.max;
+import static java.util.Collections.shuffle;
 
 @Fork(3)
 @Warmup(iterations = 5, time = 1)
@@ -33,23 +33,24 @@ public class CacheFriendlinessBenchmark {
         values = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             values.add(r.nextInt());
-            // Push Integer objects to separate cache lines
-            for (int j = 0, end = max(7, 7 + r.nextInt(12)); j < end; j++) {
-                bh.consume(Long.valueOf(r.nextLong()));
-            }
+            // Allocate 4K of random data to force TLB miss as well as cache miss
+            byte[] bytes = new byte[4096];
+            r.nextBytes(bytes);
+            bh.consume(bytes);
         }
+        shuffle(values);
         arrayList = new ArrayList<>(size);
         linkedList = new LinkedList<>();
         array = new int[size];
         for (int i = 0; i < size; i++) {
-            Integer value = values.get(r.nextInt(size));
+            Integer value = values.get(i);
             linkedList.add(value);
             arrayList.add(value);
             array[i] = value;
-            // Allocate some garbage to push the next Node to the another cache line
-            for (int j = 0, end = max(9, 9 + r.nextInt(16)); j < end; j++) {
-                bh.consume(Float.valueOf(r.nextFloat()));
-            }
+            // Allocate 4K of random data to force TLB miss as well as a cache miss
+            byte[] bytes = new byte[4096];
+            r.nextBytes(bytes);
+            bh.consume(bytes);
         }
     }
 
